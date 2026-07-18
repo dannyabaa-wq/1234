@@ -15,7 +15,11 @@ def create_high_end_ppt(filename):
     prs = Presentation()
     prs.slide_width = Inches(13.333)  # 標準 16:9 寬螢幕
     prs.slide_height = Inches(7.5)
-    current_month = datetime.datetime.now().strftime("%Y-%m")
+    
+    # 測試模式：將目前時間往後加 31 天以模擬下個月 (如 2026-08)
+    today = datetime.datetime.now()
+    next_month_dt = today + datetime.timedelta(days=31)
+    simulated_month = next_month_dt.strftime("%Y-%m")
     
     # 像素級色彩配置
     c_dark_blue_bg = RGBColor(15, 23, 42)  # 封面深藍底色 #0f172a
@@ -51,7 +55,7 @@ def create_high_end_ppt(filename):
     
     p2 = tf.add_paragraph()
     p2.alignment = PP_ALIGN.CENTER
-    p2.text = "\nAI Agent 自動檢索與語意解構 ‧ 本月最新 3 篇核心期刊剖析"
+    p2.text = f"\nAI Agent 自動檢索與語意解構 ‧ {simulated_month} 最新 3 篇核心期刊剖析"
     p2.font.size = Pt(15)
     p2.font.bold = True
     p2.font.color.rgb = c_teal_accent
@@ -134,7 +138,7 @@ def create_high_end_ppt(filename):
             "limit_header": "現存限制：",
             "limit_body": "強化學習在訓練初期的「試錯（Exploration）階段」會產生極其極端的不合理成形參數。若直接在實際射出機上運作，將高機率造成模具過飽和脹模、鎖模力過載、甚至是頂針強行折斷等致命的機械損傷。",
             "future_header": "未來方向：",
-            "future_body": "結合數位雙生（Digital Twin）與物理引擎（Physics-Informed ML）技術，在極高保真的數字模具環境中完成 99% 的強化訓練，現場真機僅作爲微調（Fine-tuning）使用。"
+            "future_body": "結合數位雙生（Digital Twin）與物理引擎（Physics-Informed ML）技術，在極高保真數字模具環境中完成 99% 的強化訓練，現場真機僅作爲微調（Fine-tuning）使用。"
         }
     ]
 
@@ -325,7 +329,6 @@ def create_high_end_ppt(filename):
             p_item.font.color.rgb = c_slate_dark
             p_item.font.name = 'Microsoft JhengHei'
             
-            # 把值直接跟在後面
             run = p_item.add_run()
             run.text = f" {val}"
             run.font.bold = False
@@ -485,19 +488,23 @@ def send_literature_report():
     receiver_email = "dannyabaa@gmail.com"
     password = "tzhj mdpo vlhi ahqh"  
 
-    current_month = datetime.datetime.now().strftime("%Y-%m")
-    ppt_filename = f"Injection_Molding_ML_Report_{current_month}.pptx"
+    # 模擬下個月的時間
+    today = datetime.datetime.now()
+    next_month_dt = today + datetime.timedelta(days=31)
+    simulated_month = next_month_dt.strftime("%Y-%m")
+    
+    ppt_filename = f"Injection_Molding_ML_Report_{simulated_month}.pptx"
     
     # 呼叫高畫質生成引擎
     create_high_end_ppt(ppt_filename)
     
     # 建立郵件
     msg = MIMEMultipart()
-    msg['Subject'] = f"【AI Agent 自動推播】{current_month} 機器學習於射出成形前沿文獻簡報"
+    msg['Subject'] = f"【AI Agent 自動推播】{simulated_month} 機器學習於射出成形前沿文獻簡報 (下月預覽測試)"
     msg['From'] = sender_email
     msg['To'] = receiver_email
 
-    body = f"您好：\n\nAI Agent 已為您自動完成本月文獻檢索。\n詳細報告已依照您指定的「頂級 HTML 簡報規格」封裝至附件的 PPTX 檔案中，請查收。\n\n祝 研究順利\nAI 文獻追蹤 Agent"
+    body = f"您好：\n\n這是一封下月預覽測試信件！\n\nAI Agent 已為您模擬生成了 {simulated_month} 月度的文獻自動化深度分析報告。\n詳細報告已依照您指定的「頂級 HTML 簡報規格」像素級封裝至附件的 PPTX 檔案中，請查收並預覽排版樣式。\n\n祝 研究順利\nAI 文獻追蹤 Agent"
     msg.attach(MIMEText(body, 'plain', 'utf-8'))
 
     try:
