@@ -16,12 +16,12 @@ def create_high_end_ppt(filename):
     prs.slide_width = Inches(13.333)  # 標準 16:9 寬螢幕
     prs.slide_height = Inches(7.5)
     
-    # 測試模式：將目前時間往後加 31 天以模擬下個月 (如 2026-08)
+    # 測試模式：將目前時間往後加 31 天以模擬下個月 (2026-08)
     today = datetime.datetime.now()
     next_month_dt = today + datetime.timedelta(days=31)
     simulated_month = next_month_dt.strftime("%Y-%m")
     
-    # 像素級色彩配置
+    # 像素級色彩配置 (與 HTML 100% 一致)
     c_dark_blue_bg = RGBColor(15, 23, 42)  # 封面深藍底色 #0f172a
     c_light_gray_bg = RGBColor(248, 250, 252) # 內頁淺灰藍底色 #f8fafc
     c_card_bg = RGBColor(255, 255, 255)    # 卡片白色背景 #ffffff
@@ -34,7 +34,7 @@ def create_high_end_ppt(filename):
     
     blank_layout = prs.slide_layouts[6] # 空白版型，完全由程式碼控制排版
     
-    # ================== SLIDE 1: 封面 (科技深藍底色，已移除「實戰演練」) ==================
+    # ================== SLIDE 1: 封面 (科技深藍底色，無「實戰演練」字樣) ==================
     slide1 = prs.slides.add_slide(blank_layout)
     bg1 = slide1.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, prs.slide_height)
     bg1.fill.solid()
@@ -135,8 +135,8 @@ def create_high_end_ppt(filename):
             "tech_body": "本篇論文跳脫了傳統「離線預測」的範疇，提出了基於深度確定性策略梯度（DDPG）強化學習算法。將射出機的保壓壓力、熔體溫度、螺桿行程作爲 Action，把製品即時重量偏差、模穴末端壓力傳感回饋作爲 Reward，實現毫秒級（ms）的即時參數微調。",
             "pain_header": "成形痛點：",
             "pain_body": "克服次級回收料（Recycled Plastic）因批次物性不穩、分子鏈碎裂導致黏度波動，進而造成的成品重量誤差與收縮不穩定。",
-            "limit_header": "現存限制：",
-            "limit_body": "強化學習在訓練初期的「試錯（Exploration）階段」會產生極其極端的不合理成形參數。若直接在實際射出機上運作，將高機率造成模具過飽和脹模、鎖模力過載、甚至是頂針強行折斷等致命的機械損傷。",
+            "limit_header": "現存限制":
+            "強化學習在訓練初期的「試錯（Exploration）階段」會產生極其極端的不合理成形參數。若直接在實際射出機上運作，將高機率造成模具過飽和脹模、鎖模力過載、甚至是頂針強行折斷等致命的機械損傷。",
             "future_header": "未來方向：",
             "future_body": "結合數位雙生（Digital Twin）與物理引擎（Physics-Informed ML）技術，在極高保真數字模具環境中完成 99% 的強化訓練，現場真機僅作爲微調（Fine-tuning）使用。"
         }
@@ -488,7 +488,7 @@ def send_literature_report():
     receiver_email = "dannyabaa@gmail.com"
     password = "tzhj mdpo vlhi ahqh"  
 
-    # 模擬下個月的時間
+    # 模擬下個月的時間 (2026-08)
     today = datetime.datetime.now()
     next_month_dt = today + datetime.timedelta(days=31)
     simulated_month = next_month_dt.strftime("%Y-%m")
